@@ -1,10 +1,10 @@
-import { IconeCasa, IconeEngrenagem, IconeSino } from "../icons";
+import { IconeCasa, IconeEngrenagem, IconeLogout, IconeSino } from "../icons";
 import Logo from "./Logo";
 import MenuItem from "./MenuItem";
 
 export default function MenuLateral() {
   return (
-    <aside>
+    <aside className="flex flex-col">
       <div
         className={`
           h-20 w-20
@@ -14,10 +14,18 @@ export default function MenuLateral() {
       >
         <Logo />
       </div>
-      <ul>
+      <ul className="flex-grow">
         <MenuItem url="/" texto="Início" icone={IconeCasa} />
         <MenuItem url="/ajustes" texto="Ajustes" icone={IconeEngrenagem} />
         <MenuItem url="/notificacoes" texto="Notificações" icone={IconeSino} />
+      </ul>
+      <ul>
+        <MenuItem
+          texto="Sair"
+          icone={IconeLogout}
+          onClick={() => console.log("Saindo")}
+          className="text-red-600 hover:bg-red-400 hover:text-white"
+        />
       </ul>
     </aside>
   );
