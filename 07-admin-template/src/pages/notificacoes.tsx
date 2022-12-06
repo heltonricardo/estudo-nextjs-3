@@ -2,7 +2,7 @@ import Layout from "../components/template/Layout";
 
 export default function Home() {
   return (
-    <Layout titulo="Início" subtitulo="Subtítulo">
+    <Layout titulo="Notificações" subtitulo="Subtítulo">
       Conteúdo
     </Layout>
   );
