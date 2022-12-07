@@ -6,7 +6,7 @@ export default function Notificacoes() {
 
   return (
     <Layout titulo="Notificações" subtitulo="Subtítulo">
-      {contexto.valor}
+      Conteúdo
     </Layout>
   );
 }

@@ -1,4 +1,6 @@
 import Head from "next/head";
+import useAppData from "../../data/hook/useAppData";
+import TemaEnum from "../../enums/TemaEnum";
 import Conteudo from "./Conteudo";
 import MenuLateral from "./MenuLateral";
 import Titulo from "./Titulo";
@@ -10,6 +12,8 @@ interface Props {
 }
 
 export default function Layout(props: Props) {
+  const { tema } = useAppData();
+
   return (
     <>
       <Head>
@@ -17,7 +21,7 @@ export default function Layout(props: Props) {
         <meta name="description" content="Admin Template by Helton Ricardo" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="dark flex h-screen w-screen">
+      <div className={`flex h-screen w-screen ${tema === TemaEnum.DARK && "dark"}`}>
         <MenuLateral />
         <div
           className={`
