@@ -1,9 +1,9 @@
 import Head from "next/head";
 import useAppData from "../../data/hook/useAppData";
 import TemaEnum from "../../enums/TemaEnum";
+import Cabecalho from "./Cabecalho";
 import Conteudo from "./Conteudo";
 import MenuLateral from "./MenuLateral";
-import Titulo from "./Titulo";
 
 interface Props {
   titulo: string;
@@ -31,7 +31,7 @@ export default function Layout(props: Props) {
             dark:bg-gray-800
           `}
         >
-          <Titulo {...props} />
+          <Cabecalho {...props} />
           <Conteudo>{props.children}</Conteudo>
         </div>
       </div>
