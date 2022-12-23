@@ -1,18 +1,25 @@
 import { useState } from "react";
 import AuthInput from "../components/auth/AuthInput";
+import { IconeTrianguloAtencao } from "../components/icons";
 import AuthEnum from "../enums/AuthEnum";
 
 export default function Auth() {
-  const [modo, setModo] = useState<AuthEnum>(AuthEnum.LOGIN);
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [modo, setModo] = useState<AuthEnum>(AuthEnum.LOGIN);
+  const [erro, setErro] = useState<string | null>(null);
 
   function submeter() {
     if (modo === AuthEnum.LOGIN) {
-      console.log(AuthEnum.LOGIN);
+      exibirErro("Erro ao efetuar login");
     } else {
-      console.log(AuthEnum.CADASTRO);
+      exibirErro("Erro ao se cadastrar");
     }
+  }
+
+  function exibirErro(msg: string, segundos: number = 5) {
+    setErro(msg);
+    setTimeout(() => setErro(null), segundos * 1000);
   }
 
   return (
@@ -28,6 +35,19 @@ export default function Auth() {
         <h1 className="text-3xl font-bold mb-5">
           {modo === AuthEnum.LOGIN ? "Entre com sua conta" : "Cadastre-se na plataforma"}
         </h1>
+
+        {erro && (
+          <div
+            className={`
+              flex justify-center items-center
+              bg-red-400 text-white py-3 px-5 my-2
+              rounded-lg transition-all
+        `}
+          >
+            {IconeTrianguloAtencao(20)}
+            <span className="ml-1 ">{erro}</span>
+          </div>
+        )}
 
         <AuthInput rotulo="E-mail" obrigatorio valor={email} tipo="email" valorMudou={setEmail} />
         <AuthInput rotulo="Senha" obrigatorio valor={senha} tipo="password" valorMudou={setSenha} />
