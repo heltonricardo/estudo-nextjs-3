@@ -1,9 +1,12 @@
 import { useState } from "react";
 import AuthInput from "../components/auth/AuthInput";
 import { IconeTrianguloAtencao } from "../components/icons";
+import useAuth from "../data/hook/useAuth";
 import AuthEnum from "../enums/AuthEnum";
 
 export default function Auth() {
+  const { usuario, loginGoogle } = useAuth();
+
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [modo, setModo] = useState<AuthEnum>(AuthEnum.LOGIN);
@@ -65,7 +68,7 @@ export default function Auth() {
         <hr className="my-6 border-gray-300 w-full" />
 
         <button
-          onClick={submeter}
+          onClick={loginGoogle}
           className={`
           w-full rounded-lg px-4 py-3
           bg-red-500 hover:bg-red-400 text-white `}
