@@ -7,7 +7,7 @@ export default function BotaoTema() {
 
   let icone, cores;
 
-  if (tema === TemaEnum.LIGHT) {
+  if (tema === TemaEnum.CLARO) {
     icone = IconeLua;
     cores = "text-gray-200 bg-gradient-to-l from-gray-500 to-gray-900";
   } else {

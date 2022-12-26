@@ -21,7 +21,7 @@ export default function Layout(props: Props) {
         <meta name="description" content="Admin Template by Helton Ricardo" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={`flex h-screen w-screen ${tema === TemaEnum.DARK && "dark"}`}>
+      <div className={`flex h-screen w-screen ${tema === TemaEnum.ESCURO && "dark"}`}>
         <MenuLateral />
         <div
           className={`

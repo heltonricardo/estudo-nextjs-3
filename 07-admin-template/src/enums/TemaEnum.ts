@@ -1,6 +1,6 @@
 enum TemaEnum {
-  LIGHT,
-  DARK,
+  CLARO,
+  ESCURO,
 }
 
 export default TemaEnum;
