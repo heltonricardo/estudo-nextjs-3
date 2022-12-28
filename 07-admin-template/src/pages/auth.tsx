@@ -5,7 +5,7 @@ import useAuth from "../data/hook/useAuth";
 import AuthEnum from "../enums/AuthEnum";
 
 export default function Auth() {
-  const { usuario, loginGoogle } = useAuth();
+  const { loginGoogle } = useAuth();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -47,7 +47,7 @@ export default function Auth() {
               rounded-lg transition-all
         `}
           >
-            {IconeTrianguloAtencao(20)}
+            {IconeTrianguloAtencao(5)}
             <span className="ml-1 ">{erro}</span>
           </div>
         )}
