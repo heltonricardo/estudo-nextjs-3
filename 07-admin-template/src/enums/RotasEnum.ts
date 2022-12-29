@@ -1,4 +1,6 @@
 enum RotasEnum {
+  ROOT = "/",
+  AUTH = "/auth",
   PERFIL = "/perfil",
 }
 

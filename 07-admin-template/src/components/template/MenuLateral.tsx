@@ -1,8 +1,11 @@
+import useAuth from "../../data/hook/useAuth";
 import { IconeCasa, IconeEngrenagem, IconeLogout, IconeSino } from "../icons";
 import ImagemUsuario from "./ImagemUsuario";
 import MenuItem from "./MenuItem";
 
 export default function MenuLateral() {
+  const { logout } = useAuth();
+
   return (
     <aside
       className={`
@@ -23,6 +26,7 @@ export default function MenuLateral() {
         <MenuItem
           texto="Sair"
           icone={IconeLogout}
+          onClick={logout}
           className={`
             text-red-600 hover:bg-red-400 hover:text-white
             dark:text-red-600 dark:hover:bg-red-400 dark:hover:text-white

@@ -1,13 +1,17 @@
 import Cookies from "js-cookie";
 import router from "next/router";
 import { createContext, ReactElement, useEffect, useState } from "react";
+import RotasEnum from "../../enums/RotasEnum";
 import firebase from "../../firebase/config";
 import Usuario from "../../model/Usuario";
 
 interface Props {
   usuario?: Usuario;
   loginGoogle?: () => Promise<void>;
+  logout?: () => Promise<void>;
 }
+
+const COOKIE_NAME = "admin-template-auth";
 
 async function normalizarUsuario(usuarioFirebase: firebase.User): Promise<Usuario> {
   return {
@@ -21,7 +25,6 @@ async function normalizarUsuario(usuarioFirebase: firebase.User): Promise<Usuari
 }
 
 function gerirCookie(isLogado: boolean) {
-  const COOKIE_NAME = "admin-template-auth";
   if (isLogado) {
     Cookies.set(COOKIE_NAME, COOKIE_NAME, { expires: 7 });
   } else {
@@ -51,14 +54,32 @@ export function AuthProvider(props: { children: ReactElement }) {
   }
 
   async function loginGoogle() {
-    const resp = await firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    await configurarSessao(resp.user);
-    router.push("/");
+    setCarregando(true);
+    try {
+      const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+      const resp = await firebase.auth().signInWithPopup(googleAuthProvider);
+      await configurarSessao(resp.user);
+      router.push(RotasEnum.ROOT);
+    } finally {
+      setCarregando(false);
+    }
+  }
+
+  async function logout() {
+    setCarregando(true);
+    try {
+      await firebase.auth().signOut();
+      await configurarSessao(null);
+    } finally {
+      setCarregando(false);
+    }
   }
 
   useEffect(() => {
-    const cancelarObserver = firebase.auth().onIdTokenChanged(configurarSessao);
-    return () => cancelarObserver();
+    if (Cookies.get(COOKIE_NAME)) {
+      const cancelarObserver = firebase.auth().onIdTokenChanged(configurarSessao);
+      return () => cancelarObserver();
+    }
   }, []);
 
   return (
@@ -66,6 +87,7 @@ export function AuthProvider(props: { children: ReactElement }) {
       value={{
         usuario,
         loginGoogle,
+        logout,
       }}
     >
       {props.children}
