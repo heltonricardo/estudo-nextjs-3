@@ -17,7 +17,7 @@ export default function ForcarAutenticacao(props: Props) {
 
   function renderCarregamento() {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-screen bg-gray-400">
         <Carregando />
       </div>
     );
@@ -30,4 +30,5 @@ export default function ForcarAutenticacao(props: Props) {
     return renderCarregamento();
   }
   router.push(RotasEnum.AUTH);
+  return null;
 }
