@@ -7,6 +7,7 @@ import Usuario from "../../model/Usuario";
 
 interface Props {
   usuario?: Usuario;
+  isCarregando?: boolean;
   loginGoogle?: () => Promise<void>;
   logout?: () => Promise<void>;
 }
@@ -79,6 +80,8 @@ export function AuthProvider(props: { children: ReactElement }) {
     if (Cookies.get(COOKIE_NAME)) {
       const cancelarObserver = firebase.auth().onIdTokenChanged(configurarSessao);
       return () => cancelarObserver();
+    } else {
+      setCarregando(false);
     }
   }, []);
 
@@ -86,6 +89,7 @@ export function AuthProvider(props: { children: ReactElement }) {
     <AuthContext.Provider
       value={{
         usuario,
+        isCarregando,
         loginGoogle,
         logout,
       }}
