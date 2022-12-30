@@ -8,6 +8,8 @@ import Usuario from "../../model/Usuario";
 interface Props {
   usuario?: Usuario;
   isCarregando?: boolean;
+  cadastrarUsuario?: (email: string, senha: string) => Promise<void>;
+  login?: (email: string, senha: string) => Promise<void>;
   loginGoogle?: () => Promise<void>;
   logout?: () => Promise<void>;
 }
@@ -54,6 +56,28 @@ export function AuthProvider(props: { children: ReactElement }) {
     }
   }
 
+  async function cadastrarUsuario(email: string, senha: string) {
+    setCarregando(true);
+    try {
+      const resp = await firebase.auth().createUserWithEmailAndPassword(email, senha);
+      await configurarSessao(resp.user);
+      router.push(RotasEnum.ROOT);
+    } finally {
+      setCarregando(false);
+    }
+  }
+
+  async function login(email: string, senha: string) {
+    setCarregando(true);
+    try {
+      const resp = await firebase.auth().signInWithEmailAndPassword(email, senha);
+      await configurarSessao(resp.user);
+      router.push(RotasEnum.ROOT);
+    } finally {
+      setCarregando(false);
+    }
+  }
+
   async function loginGoogle() {
     setCarregando(true);
     try {
@@ -90,6 +114,8 @@ export function AuthProvider(props: { children: ReactElement }) {
       value={{
         usuario,
         isCarregando,
+        cadastrarUsuario,
+        login,
         loginGoogle,
         logout,
       }}

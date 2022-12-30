@@ -5,18 +5,22 @@ import useAuth from "../data/hook/useAuth";
 import AuthEnum from "../enums/AuthEnum";
 
 export default function Auth() {
-  const { loginGoogle } = useAuth();
+  const { cadastrarUsuario, login, loginGoogle } = useAuth();
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [modo, setModo] = useState<AuthEnum>(AuthEnum.LOGIN);
   const [erro, setErro] = useState<string | null>(null);
 
-  function submeter() {
-    if (modo === AuthEnum.LOGIN) {
-      exibirErro("Erro ao efetuar login");
-    } else {
-      exibirErro("Erro ao se cadastrar");
+  async function submeter() {
+    try {
+      if (modo === AuthEnum.LOGIN) {
+        login && (await login(email, senha));
+      } else {
+        cadastrarUsuario && (await cadastrarUsuario(email, senha));
+      }
+    } catch (error) {
+      exibirErro((error as Error)?.message || "Erro desconhecido");
     }
   }
 
