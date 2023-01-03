@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Layout from "../components/Layout";
 
 export default function Home() {
   return (
@@ -9,8 +10,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex h-screen justify-center items-center">
-        <span>Teste</span>
+      <main
+        className={`
+        flex justify-center items-center
+        h-screen
+        bg-gradient-to-b from-blue-600 to-purple-600
+        text-white
+      `}
+      >
+        <Layout titulo="Cadastro CRUD">
+          <span>Conteúdo</span>
+        </Layout>
       </main>
 
       <footer></footer>
