@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useCallback } from "react";
 import Layout from "../components/Layout";
 import Tabela from "../components/Tabela";
 import Cliente from "../core/Cliente";
@@ -10,6 +11,14 @@ export default function Home() {
     new Cliente("3", "Carol", 23),
     new Cliente("4", "Diego", 24),
   ];
+
+  const clienteSelecionado = useCallback((cliente: Cliente) => {
+    console.log(cliente.nome);
+  }, []);
+
+  const clienteExcluido = useCallback((cliente: Cliente) => {
+    console.log(cliente);
+  }, []);
 
   return (
     <div>
@@ -28,7 +37,7 @@ export default function Home() {
       `}
       >
         <Layout titulo="Cadastro CRUD">
-          <Tabela clientes={clientes} />
+          <Tabela clientes={clientes} clienteSelecionado={clienteSelecionado} clienteExcluido={clienteExcluido} />
         </Layout>
       </main>
 
