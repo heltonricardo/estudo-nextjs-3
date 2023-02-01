@@ -63,7 +63,7 @@ export default function Tabela(props: Props) {
       <thead
         className={`
           text-gray-100
-          bg-gradient-to-b from bg-purple-500 to-purple-800
+          bg-gradient-to-r from-purple-600 to-purple-800
       `}
       >
         {renderCabecalho()}
