@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useCallback } from "react";
 import Botao from "../components/Botao";
+import Formulario from "../components/Formulario";
 import Layout from "../components/Layout";
 import Tabela from "../components/Tabela";
 import Cliente from "../core/Cliente";
@@ -38,9 +39,12 @@ export default function Home() {
       >
         <Layout titulo="Cadastro CRUD">
           <div className="flex justify-end">
-            <Botao cor="green" className="mb-2">Novo cliente</Botao>
+            <Botao cor="green" className="mb-2">
+              Novo cliente
+            </Botao>
           </div>
           <Tabela clientes={clientes} clienteSelecionado={clienteSelecionado} clienteExcluido={clienteExcluido} />
+          <Formulario cliente={clientes[0]} />
         </Layout>
       </main>
 

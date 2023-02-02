@@ -23,7 +23,7 @@ export default function Botao(props: Props) {
  * arquivo tailwind.config.js a seguinte linha:
  *
  * safelist: [{ pattern: /from-(green|blue|gray)-(400|700)/ }, { pattern: /to-(green|blue|gray)-(400|700)/ }],
- * 
+ *
  * Como o tailwind não conhece essas classes deste arquivo, ele não as incluiria no arquivo no modo de produção (na
  * verdade ele poderia incluir, mas por causa de qualquer outro arquivo que usasse essas classes de forma literal).
-*/
+ */
