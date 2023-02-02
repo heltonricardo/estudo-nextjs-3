@@ -5,6 +5,8 @@ import Entrada from "./Entrada";
 
 interface Props {
   cliente?: Cliente;
+  clienteMudou?: (cliente: Cliente) => void;
+  cancelado?: () => void;
 }
 
 export default function Formulario(props: Props) {
@@ -15,11 +17,15 @@ export default function Formulario(props: Props) {
   return (
     <div>
       {id && <Entrada texto="Código" valor={id} somenteLeitura className="mb-5" />}
-      <Entrada texto="Nome" valor={nome} aoAlterar={setNome} className="mb-5" />
-      <Entrada texto="Idade" tipo="number" valor={idade} aoAlterar={setIdade} className="mb-5" />
+      <Entrada texto="Nome" valor={nome} valorMudou={setNome} className="mb-5" />
+      <Entrada texto="Idade" tipo="number" valor={idade} valorMudou={setIdade} className="mb-5" />
       <div className="flex justify-end">
-        <Botao cor="blue">{id ? "Alterar" : "Salvar"}</Botao>
-        <Botao className="ml-2">Cancelar</Botao>
+        <Botao onClick={() => props.clienteMudou?.(new Cliente(id, nome, idade))} cor="blue">
+          {id ? "Alterar" : "Salvar"}
+        </Botao>
+        <Botao onClick={props.cancelado} className="ml-2">
+          Cancelar
+        </Botao>
       </div>
     </div>
   );

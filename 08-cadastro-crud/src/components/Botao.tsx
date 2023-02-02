@@ -2,12 +2,14 @@ interface Props {
   cor?: "green" | "blue" | "gray";
   className?: string;
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
 export default function Botao(props: Props) {
   const cor = props.cor || "gray";
   return (
     <button
+      onClick={props.onClick}
       className={`
         px-4 py-2 rounded-md
         text-white bg-gradient-to-r from-${cor}-400 to-${cor}-700

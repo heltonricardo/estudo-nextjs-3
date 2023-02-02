@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import Botao from "../components/Botao";
 import Formulario from "../components/Formulario";
 import Layout from "../components/Layout";
@@ -14,11 +14,17 @@ export default function Home() {
     new Cliente("4", "Diego", 24),
   ];
 
+  const [visualizar, setVisualizar] = useState<"tabela" | "formulario">("tabela");
+
   const clienteSelecionado = useCallback((cliente: Cliente) => {
     console.log(cliente.nome);
   }, []);
 
   const clienteExcluido = useCallback((cliente: Cliente) => {
+    console.log(cliente);
+  }, []);
+
+  const salvarCliente = useCallback((cliente: Cliente) => {
     console.log(cliente);
   }, []);
 
@@ -38,13 +44,18 @@ export default function Home() {
       `}
       >
         <Layout titulo="Cadastro CRUD">
-          <div className="flex justify-end">
-            <Botao cor="green" className="mb-2">
-              Novo cliente
-            </Botao>
-          </div>
-          <Tabela clientes={clientes} clienteSelecionado={clienteSelecionado} clienteExcluido={clienteExcluido} />
-          <Formulario cliente={clientes[0]} />
+          {visualizar === "tabela" ? (
+            <>
+              <div className="flex justify-end">
+                <Botao onClick={() => setVisualizar("formulario")} cor="green" className="mb-2">
+                  Novo cliente
+                </Botao>
+              </div>
+              <Tabela clientes={clientes} clienteSelecionado={clienteSelecionado} clienteExcluido={clienteExcluido} />
+            </>
+          ) : (
+            <Formulario cliente={clientes[0]} clienteMudou={salvarCliente} cancelado={() => setVisualizar("tabela")} />
+          )}
         </Layout>
       </main>
 
