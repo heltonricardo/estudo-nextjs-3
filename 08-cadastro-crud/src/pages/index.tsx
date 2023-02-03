@@ -15,17 +15,25 @@ export default function Home() {
   ];
 
   const [visualizar, setVisualizar] = useState<"tabela" | "formulario">("tabela");
+  const [cliente, setCliente] = useState(new Cliente());
 
   const clienteSelecionado = useCallback((cliente: Cliente) => {
-    console.log(cliente.nome);
+    setCliente(cliente);
+    setVisualizar("formulario");
   }, []);
 
   const clienteExcluido = useCallback((cliente: Cliente) => {
     console.log(cliente);
   }, []);
 
+  const criarCliente = useCallback(() => {
+    setCliente(new Cliente());
+    setVisualizar("formulario");
+  }, []);
+
   const salvarCliente = useCallback((cliente: Cliente) => {
     console.log(cliente);
+    setVisualizar("tabela");
   }, []);
 
   return (
@@ -47,14 +55,14 @@ export default function Home() {
           {visualizar === "tabela" ? (
             <>
               <div className="flex justify-end">
-                <Botao onClick={() => setVisualizar("formulario")} cor="green" className="mb-2">
+                <Botao onClick={criarCliente} cor="green" className="mb-2">
                   Novo cliente
                 </Botao>
               </div>
               <Tabela clientes={clientes} clienteSelecionado={clienteSelecionado} clienteExcluido={clienteExcluido} />
             </>
           ) : (
-            <Formulario cliente={clientes[0]} clienteMudou={salvarCliente} cancelado={() => setVisualizar("tabela")} />
+            <Formulario cliente={cliente} clienteMudou={salvarCliente} cancelado={() => setVisualizar("tabela")} />
           )}
         </Layout>
       </main>
