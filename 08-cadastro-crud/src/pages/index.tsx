@@ -1,29 +1,36 @@
 import Head from "next/head";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Botao from "../components/Botao";
 import Formulario from "../components/Formulario";
 import Layout from "../components/Layout";
 import Tabela from "../components/Tabela";
 import Cliente from "../core/Cliente";
+import ColecaoCliente from "../firebase/db/ColecaoCliente";
 
 export default function Home() {
-  const clientes = [
-    new Cliente("1", "Ana", 21),
-    new Cliente("2", "Bia", 22),
-    new Cliente("3", "Carol", 23),
-    new Cliente("4", "Diego", 24),
-  ];
+  const repo = new ColecaoCliente();
 
   const [visualizar, setVisualizar] = useState<"tabela" | "formulario">("tabela");
   const [cliente, setCliente] = useState(new Cliente());
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+
+  useEffect(listar, []);
+
+  function listar() {
+    repo.listar().then((clientes) => {
+      setClientes(clientes);
+      setVisualizar("tabela");
+    });
+  }
 
   const clienteSelecionado = useCallback((cliente: Cliente) => {
     setCliente(cliente);
     setVisualizar("formulario");
   }, []);
 
-  const clienteExcluido = useCallback((cliente: Cliente) => {
-    console.log(cliente);
+  const clienteExcluido = useCallback(async (cliente: Cliente) => {
+    await repo.excluir(cliente);
+    listar();
   }, []);
 
   const criarCliente = useCallback(() => {
@@ -31,9 +38,9 @@ export default function Home() {
     setVisualizar("formulario");
   }, []);
 
-  const salvarCliente = useCallback((cliente: Cliente) => {
-    console.log(cliente);
-    setVisualizar("tabela");
+  const salvarCliente = useCallback(async (cliente: Cliente) => {
+    await repo.salvar(cliente);
+    listar();
   }, []);
 
   return (
