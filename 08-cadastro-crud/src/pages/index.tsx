@@ -1,47 +1,23 @@
 import Head from "next/head";
-import { useCallback, useEffect, useState } from "react";
 import Botao from "../components/Botao";
 import Formulario from "../components/Formulario";
 import Layout from "../components/Layout";
 import Tabela from "../components/Tabela";
-import Cliente from "../core/Cliente";
-import ColecaoCliente from "../firebase/db/ColecaoCliente";
+import useClientes from "../hooks/useClientes";
 
 export default function Home() {
-  const repo = new ColecaoCliente();
+  const {
+    cliente,
+    clientes,
+    tabelaVisivel,
+    criarCliente,
+    clienteSelecionado,
+    clienteExcluido,
+    salvarCliente,
+    exibirTabela,
+  } = useClientes();
 
-  const [visualizar, setVisualizar] = useState<"tabela" | "formulario">("tabela");
-  const [cliente, setCliente] = useState(new Cliente());
-  const [clientes, setClientes] = useState<Cliente[]>([]);
-
-  useEffect(listar, []);
-
-  function listar() {
-    repo.listar().then((clientes) => {
-      setClientes(clientes);
-      setVisualizar("tabela");
-    });
-  }
-
-  const clienteSelecionado = useCallback((cliente: Cliente) => {
-    setCliente(cliente);
-    setVisualizar("formulario");
-  }, []);
-
-  const clienteExcluido = useCallback(async (cliente: Cliente) => {
-    await repo.excluir(cliente);
-    listar();
-  }, []);
-
-  const criarCliente = useCallback(() => {
-    setCliente(new Cliente());
-    setVisualizar("formulario");
-  }, []);
-
-  const salvarCliente = useCallback(async (cliente: Cliente) => {
-    await repo.salvar(cliente);
-    listar();
-  }, []);
+  console.log(tabelaVisivel)
 
   return (
     <div>
@@ -59,7 +35,7 @@ export default function Home() {
       `}
       >
         <Layout titulo="Cadastro CRUD">
-          {visualizar === "tabela" ? (
+          {tabelaVisivel ? (
             <>
               <div className="flex justify-end">
                 <Botao onClick={criarCliente} cor="green" className="mb-2">
@@ -69,7 +45,7 @@ export default function Home() {
               <Tabela clientes={clientes} clienteSelecionado={clienteSelecionado} clienteExcluido={clienteExcluido} />
             </>
           ) : (
-            <Formulario cliente={cliente} clienteMudou={salvarCliente} cancelado={() => setVisualizar("tabela")} />
+            <Formulario cliente={cliente} clienteMudou={salvarCliente} cancelado={() => exibirTabela()} />
           )}
         </Layout>
       </main>
