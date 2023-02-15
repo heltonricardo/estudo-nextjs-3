@@ -10,7 +10,7 @@ const LS_TEMA = "tema";
 
 export const AppContext = createContext<Props>({});
 
-export function AppProvider(props: { children: ReactElement }) {
+export function AppProvider(props: { children: React.ReactNode }) {
   const [tema, setTema] = useState<TemaEnum>(TemaEnum.CLARO);
 
   function alternarTema() {
